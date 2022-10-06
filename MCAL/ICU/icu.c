@@ -9,10 +9,10 @@
 *******************************************************************************/
 
 #include "icu.h"
-#include "gpio.h"
+#include "../../MCAL/GPIO/gpio.h"
 #include "avr/io.h"
 #include "avr/interrupt.h"
-#include "common_macros.h"
+#include "../../LIB/common_macros.h"
 
 /*******************************************************************************
 *                           Global Variables                                  *
