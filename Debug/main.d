@@ -1,16 +1,11 @@
-main.o main.o: ../main.c ../HAL/LCD/lcd.h \
-  ../HAL/LCD/../../LIB/std_types.h ../MCAL/ADC/adc.h \
-  ../MCAL/ADC/../../LIB/std_types.h ../HAL/LM35_SENSOR/lm35_sensor.h \
-  ../HAL/LM35_SENSOR/../../LIB/std_types.h
+main.o main.o: ../main.c ../MCAL/GPIO/gpio.h \
+  ../MCAL/GPIO/../../LIB/std_types.h ../HAL/KEYPAD/keypad.h \
+  ../HAL/KEYPAD/../../LIB/std_types.h
 
-../HAL/LCD/lcd.h:
+../MCAL/GPIO/gpio.h:
 
-../HAL/LCD/../../LIB/std_types.h:
+../MCAL/GPIO/../../LIB/std_types.h:
 
-../MCAL/ADC/adc.h:
+../HAL/KEYPAD/keypad.h:
 
-../MCAL/ADC/../../LIB/std_types.h:
-
-../HAL/LM35_SENSOR/lm35_sensor.h:
-
-../HAL/LM35_SENSOR/../../LIB/std_types.h:
+../HAL/KEYPAD/../../LIB/std_types.h:

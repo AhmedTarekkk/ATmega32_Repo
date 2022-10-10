@@ -1,32 +1,30 @@
-/*
- * main.c
- *
- *  Created on: Oct 4, 2022
- *      Author: Ahmed
- */
+/******************************************************************************
+*  File name:		main.c
+*  Author:			Oct 10, 2022
+*  Author:			Ahmed Tarek
+*******************************************************************************/
 
-#include"HAL/LCD/lcd.h"
-#include "MCAL/ADC/adc.h"
-#include "HAL/LM35_SENSOR/lm35_sensor.h"
+#include "MCAL/GPIO/gpio.h"
+#include "HAL/KEYPAD/keypad.h"
 
 int main(void)
 {
-	uint8 res_value;
-	LCD_init(); /* initialize LCD driver */
-	//ADC_init(); /* initialize ADC driver */
+	uint8 key;
 
-	LCD_displayStringRowColumn(0, 5, "Temp = ");
+	/* Use a 7-segment to display the keypad button value */
+	GPIO_setupPinDirection(PORTC_ID,PIN0_ID,PIN_OUTPUT);
+	GPIO_setupPinDirection(PORTC_ID,PIN1_ID,PIN_OUTPUT);
+	GPIO_setupPinDirection(PORTC_ID,PIN2_ID,PIN_OUTPUT);
+	GPIO_setupPinDirection(PORTC_ID,PIN3_ID,PIN_OUTPUT);
+
 	while(1)
 	{
-		res_value = LM35_getTemperature();
-		if(res_value >= 100)
+		/* Get the pressed button from keypad */
+		key = KEYPAD_getPressedKey();
+
+		if((key >= 0) && (key <= 9))
 		{
-			LCD_intgerToString(res_value);
-		}
-		else
-		{
-			LCD_intgerToString(res_value);
-			LCD_displayCharacter(' ');
+			GPIO_writePort(PORTC_ID,key); /* display the key number on the 7-segment */
 		}
 	}
 }
