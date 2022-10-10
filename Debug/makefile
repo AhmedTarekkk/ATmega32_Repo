@@ -12,6 +12,7 @@ RM := rm -rf
 -include MCAL/ICU/subdir.mk
 -include MCAL/GPIO/subdir.mk
 -include MCAL/ADC/subdir.mk
+-include HAL/SEVEN_SEGMENT/subdir.mk
 -include HAL/MOTOR/subdir.mk
 -include HAL/LM35_SENSOR/subdir.mk
 -include HAL/LCD/subdir.mk
