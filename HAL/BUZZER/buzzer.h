@@ -37,8 +37,8 @@ void BUZZER_init(void);
 
 /*******************************************************************************
 * Function Name:		BUZZER_on
-* Description:			Function to dynamic configure the ADC module
-* Parameters (in):    	Pointer to structure of type ADC_ConfigType
+* Description:			Function to turn the buzzer on
+* Parameters (in):    	None
 * Parameters (out):   	None
 * Return value:      	void
 ********************************************************************************/
@@ -47,8 +47,8 @@ void BUZZER_on(void);
 
 /*******************************************************************************
 * Function Name:		BUZZER_off
-* Description:			Function to dynamic configure the ADC module
-* Parameters (in):    	Pointer to structure of type ADC_ConfigType
+* Description:			Function to turn the buzzer off
+* Parameters (in):    	None
 * Parameters (out):   	None
 * Return value:      	void
 ********************************************************************************/
