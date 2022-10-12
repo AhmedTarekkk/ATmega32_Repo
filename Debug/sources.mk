@@ -19,12 +19,15 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+APP \
+HAL/BUZZER \
 HAL/KEYPAD \
 HAL/LCD \
 HAL/LM35_SENSOR \
 HAL/MOTOR \
 HAL/SEVEN_SEGMENT \
 MCAL/ADC \
+MCAL/GLI \
 MCAL/GPIO \
 MCAL/ICU \
 MCAL/PWM0 \
