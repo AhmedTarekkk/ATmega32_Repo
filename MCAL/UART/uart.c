@@ -29,7 +29,7 @@ void UART_init(const UART_ConfigType * Configptr)
 	UCSRB = (1<<RXEN) | (1<<TXEN) ;	/* Transmission and receive enable */
 
 	SET_BIT(UCSRC,URSEL); /* so we can write in UCSRC register */
-	UCSRC = (UCSRC & CLEAR_CHAR_SIZE_MASK ) | ( (Configptr->CHAR_SIZE) ) ; /* setting the number of bits in UART frame */
+	UCSRC = (UCSRC & CLEAR_CHAR_SIZE_MASK ) | ( (Configptr->CHAR_SIZE)<<1 ) ; /* setting the number of bits in UART frame */
 	UCSRC = (UCSRC & CLEAR_STOP_BITS_MASK) | ( (Configptr->STOP_BIT)<<3 ) ; /* set the number of stop bits */
 	UCSRC = (UCSRC & CLEAR_PARITY_MASK ) | ( (Configptr->parity)<<4 ) ; /* setting the parity */
 
@@ -68,11 +68,17 @@ void UART_receiveString(uint8 *Str)
 {
 	uint8 i = 0;
 
-	do
-	{
-		Str[i] = UART_receiveByte();
-	}while(Str[i] != g_endStringChar);
+	/* Receive the first byte */
+	Str[i] = UART_receiveByte();
 
+	/* Receive the whole string until the '#' */
+	while(Str[i] != g_endStringChar)
+	{
+		i++;
+		Str[i] = UART_receiveByte();
+	}
+
+	/* After receiving the whole string plus the '#', replace the '#' with '\0' */
 	Str[i] = '\0';
 
 }

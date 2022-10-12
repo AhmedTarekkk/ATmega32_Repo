@@ -74,7 +74,7 @@ typedef struct
 {
 	uint32 BAUD_RATE;
 	uint8 END_SRTING; /* Receive the required string until the END_STRING char */
-	UART_StopBits STOP_BIT  ;
+	UART_StopBits STOP_BIT ;
 	UART_CharSize CHAR_SIZE ; /* max 8-bit not 9 */
 	UART_Parity parity;
 }UART_ConfigType;
