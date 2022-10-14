@@ -17,9 +17,10 @@
 *                        		Definitions                                    *
 *******************************************************************************/
 
-#define CLEAR_PARITY_MASK			0xCF
-#define CLEAR_STOP_BITS_MASK		0xF7
-#define CLEAR_CHAR_SIZE_MASK		0xF9
+#define CLEAR_PARITY_MASK				0xCF
+#define CLEAR_STOP_BITS_MASK			0xF7
+#define CLEAR_CHAR_SIZE_MASK			0xF9
+#define CLEAR_RECEIVE_METHOD_MASK		0x7F
 
 /*******************************************************************************
 *                         Types Declaration                                   *
@@ -65,6 +66,18 @@ typedef enum
 }UART_CharSize;
 
 /*******************************************************************************
+* Name: UART_RECEIVE_METHODE
+* Type: Enumeration
+* Description: Data type to determine the method of receiving interrupt or polling
+********************************************************************************/
+
+typedef enum
+{
+	POLLING,
+	INTERRUPT
+}UART_RECEIVE_METHOD;
+
+/*******************************************************************************
 * Name: UART_ConfigType
 * Type: Enumeration
 * Description: Data type to dynamic configure the UART module
@@ -76,7 +89,8 @@ typedef struct
 	uint8 END_SRTING; /* Receive the required string until the END_STRING char */
 	UART_StopBits STOP_BIT ;
 	UART_CharSize CHAR_SIZE ; /* max 8-bit not 9 */
-	UART_Parity parity;
+	UART_Parity PARITY;
+	UART_RECEIVE_METHOD RECEVIE_METHOD;
 }UART_ConfigType;
 
 /*******************************************************************************
@@ -133,6 +147,14 @@ void UART_sendString(const uint8 *Str);
 
 void UART_receiveString(uint8 *Str);
 
+/*******************************************************************************
+* Function Name:		UART_setCallBack
+* Description:			Function to set the ISR of the UART Module in case using interrupt methode
+* Parameters (in):    	Pointer to function to set it as the ISR
+* Parameters (out):   	None
+* Return value:      	void
+********************************************************************************/
 
+void UART_setCallBack( void(*a_ptr)(void) );
 
 #endif /* MCAL_UART_UART_H_ */
