@@ -48,7 +48,7 @@ void SPI_initSlave(void)
 	SPSR &= ~(1<<SPI2X);
 }
 
-uint8 SPI_sendReceive(uint8 data)
+uint8 SPI_sendReceiveByte(uint8 data)
 {
 	SPDR = data;
 
@@ -61,12 +61,17 @@ void SPI_sendString(const uint8 *str)
 {
 	uint8 i = 0;
 	uint8 received_data = 0;
+
+	/* Send the whole string */
 	while(str[i] != '\0')
 	{
-		received_data = SPI_sendString(str[i]);
+		/*
+		 * received_data contains the received data from the other device.
+		 * It is a dummy data variable as we just need to send the string to other device.
+		 */
+		received_data = SPI_sendReceiveByte(str[i]);
 		i++;
 	}
-	str[i] = '\0';
 }
 
 void SPI_receiveString(uint8 *str)

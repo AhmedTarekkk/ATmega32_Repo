@@ -53,7 +53,7 @@ void SPI_initSlave(void);
 * Return value:      	uint8
 ********************************************************************************/
 
-uint8 SPI_sendReceive(uint8 data);
+uint8 SPI_sendReceiveByte(uint8 data);
 
 /*******************************************************************************
 * Function Name:		SPI_sendString

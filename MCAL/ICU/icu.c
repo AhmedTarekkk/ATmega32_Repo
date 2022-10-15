@@ -67,7 +67,7 @@ uint16 ICU_getInputCaptureValue(void)
 
 void ICU_clearTimerValue(void)
 {
-	TCNT0 = 0;
+	TCNT1 = 0;
 }
 
 void ICU_DeInit(void)
