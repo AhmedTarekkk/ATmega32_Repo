@@ -11,30 +11,30 @@
 *                        		Inclusions                                     *
 *******************************************************************************/
 
-#include "../../LIB/std_types.h"
+#include "avr/interrupt.h"
 
 /*******************************************************************************
-*                      Functions Prototypes                                   *
+*                      			Macros		                                   *
 *******************************************************************************/
 
+/* We are going to use macros instead of functions as sei() and cli() compiles
+ * into a single line of assembly, so there is no function call overhead.
+ */
+
 /*******************************************************************************
-* Function Name:		GLI_Enable
+* Macro Name:			GLI_Enable
 * Description:			Global interrupt enable
 * Parameters (in):    	None
-* Parameters (out):   	None
-* Return value:      	void
 ********************************************************************************/
 
-void GLI_Enable(void);
+#define GLI_Enable()			sei()
 
 /*******************************************************************************
-* Function Name:		GLI_Disable
+* Macro Name:			GLI_Disable
 * Description:			Global interrupt disable
 * Parameters (in):    	None
-* Parameters (out):   	None
-* Return value:      	void
 ********************************************************************************/
 
-void GLI_Disable(void);
+#define GLI_Disable()			cli()
 
 #endif /* MCAL_GLI_GLI_H_ */
