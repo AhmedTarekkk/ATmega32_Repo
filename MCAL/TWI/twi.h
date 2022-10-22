@@ -31,17 +31,74 @@
 *******************************************************************************/
 
 /*******************************************************************************
-* Function Name:		ADC_init
-* Description:			Function to dynamic configure the ADC module
-* Parameters (in):    	Pointer to structure of type ADC_ConfigType
+* Function Name:		TWI_init
+* Description:			Function to initialize the I2C.
+* Parameters (in):    	None
 * Parameters (out):   	None
 * Return value:      	void
 ********************************************************************************/
+
 void TWI_init();
+
+/*******************************************************************************
+* Function Name:		TWI_start
+* Description:			Function to send start bit.
+* Parameters (in):    	None
+* Parameters (out):   	None
+* Return value:      	void
+********************************************************************************/
+
 void TWI_start();
+
+/*******************************************************************************
+* Function Name:		TWI_stop
+* Description:			Function to send stop bit.
+* Parameters (in):    	None
+* Parameters (out):   	None
+* Return value:      	void
+********************************************************************************/
+
 void TWI_stop();
+
+/*******************************************************************************
+* Function Name:		TWI_writeByte
+* Description:			Function to send byte on the bus.
+* Parameters (in):    	Byte to send it.
+* Parameters (out):   	None
+* Return value:      	void
+********************************************************************************/
+
 void TWI_writeByte(uint8 byte);
+
+/*******************************************************************************
+* Function Name:		TWI_readByteWithACK
+* Description:			Function to receive byte and send ACK.
+* Parameters (in):    	None
+* Parameters (out):   	The received byte.
+* Return value:      	uint8
+********************************************************************************/
+
 uint8 TWI_readByteWithACK(void);
+
+/*******************************************************************************
+* Function Name:		TWI_readByteWithNACK
+* Description:			Function to receive byte and send NACK.
+* Parameters (in):    	None
+* Parameters (out):   	The received byte.
+* Return value:      	uint8
+********************************************************************************/
+
+
 uint8 TWI_readByteWithNACK(void);
+
+/*******************************************************************************
+* Function Name:		TWI_getStatus
+* Description:			Function to check the I2C bus status.
+* Parameters (in):    	None
+* Parameters (out):   	Bus status
+* Return value:      	uint8
+********************************************************************************/
+
 uint8 TWI_getStatus(void);
+
 #endif /* MCAL_TWI_TWI_H_ */
