@@ -4,8 +4,8 @@
 *  Author:			Ahmed Tarek
 *******************************************************************************/
 
-#ifndef HAL_EEPORM_EEPROM_H_
-#define HAL_EEPORM_EEPROM_H_
+#ifndef HAL_EXT_EEPORM_EEPROM_H_
+#define HAL_EXT_EEPORM_EEPROM_H_
 
 /*******************************************************************************
 *                        		Inclusions                                     *
@@ -44,4 +44,4 @@ uint8 EEPROM_writeBytr(uint16 address,uint8 byte);
 
 uint8 EEPROM_readByte(uint16 address,uint8 *value);
 
-#endif /* HAL_EEPORM_EEPROM_H_ */
+#endif /* HAL_EXT_EEPORM_EEPROM_H_ */
