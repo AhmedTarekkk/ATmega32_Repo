@@ -31,10 +31,8 @@ static uint8 KEYPAD_4x4_adjustKeyNumber(uint8 button_number);
 /*******************************************************************************
 *                      Functions Definitions                                  *
 *******************************************************************************/
-
-uint8 KEYPAD_getPressedKey()
+void KEYPAD_init()
 {
-	uint8 col,row;
 	GPIO_setupPinDirection(KEYPAD_ROW_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID, PIN_INPUT);
 	GPIO_setupPinDirection(KEYPAD_ROW_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID+1, PIN_INPUT);
 	GPIO_setupPinDirection(KEYPAD_ROW_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID+2, PIN_INPUT);
@@ -43,9 +41,23 @@ uint8 KEYPAD_getPressedKey()
 	GPIO_setupPinDirection(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID, PIN_INPUT);
 	GPIO_setupPinDirection(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID+1, PIN_INPUT);
 	GPIO_setupPinDirection(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID+2, PIN_INPUT);
+	GPIO_setupPinDirection(PORTC_ID, PIN0_ID, PIN_INPUT);
 #if(KEYPAD_NUM_COLS == 4)
 	GPIO_setupPinDirection(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID+3, PIN_INPUT);
 #endif
+
+	GPIO_writePin(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID, LOGIC_HIGH);
+	GPIO_writePin(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID+1, LOGIC_HIGH);
+	GPIO_writePin(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID+2, LOGIC_HIGH);
+	GPIO_writePin(PORTC_ID, PIN0_ID, LOGIC_HIGH);
+#if(KEYPAD_NUM_COLS == 4)
+	GPIO_writePin(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID+3, LOGIC_HIGH);
+#endif
+}
+
+uint8 KEYPAD_getPressedKey()
+{
+	uint8 col,row;
 	while(1)
 	{
 		for(row = 0 ; row < KEYPAD_NUM_ROWS ; row++)
@@ -59,11 +71,14 @@ uint8 KEYPAD_getPressedKey()
 				{
 					#if (STANDARD_KEYPAD == FALSE)
 						#if (KEYPAD_NUM_COLS == 3)
+							GPIO_setupPinDirection(KEYPAD_ROW_PORT_ID,KEYPAD_FIRST_ROW_PIN_ID+row,PIN_INPUT);
 							return KEYPAD_4x3_adjustKeyNumber( (row*KEYPAD_NUM_COLS)+col+1 );
 						#elif (KEYPAD_NUM_COLS == 4)
+							GPIO_setupPinDirection(KEYPAD_ROW_PORT_ID,KEYPAD_FIRST_ROW_PIN_ID+row,PIN_INPUT);
 							return KEYPAD_4x4_adjustKeyNumber( (row*KEYPAD_NUM_COLS)+col+1 );
 						#endif
 					#elif (STANDARD_KEYPAD == TRUE)
+						GPIO_setupPinDirection(KEYPAD_ROW_PORT_ID,KEYPAD_FIRST_ROW_PIN_ID+row,PIN_INPUT);
 						return ((row*KEYPAD_NUM_COLS)+col+1);
 					#endif /* ---> STANDARD_KEYPAD */
 				}
