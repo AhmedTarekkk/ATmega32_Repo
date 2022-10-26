@@ -32,7 +32,7 @@
 * Return value:      	uint8
 ********************************************************************************/
 
-uint8 EEPROM_writeBytr(uint16 address,uint8 byte);
+uint8 EEPROM_writeByte(uint16 address,uint8 byte);
 
 /*******************************************************************************
 * Function Name:		EEPROM_readByte

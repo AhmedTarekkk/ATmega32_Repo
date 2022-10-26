@@ -10,13 +10,15 @@
 
 #include "../EXT_EEPORM/eeprom.h"
 #include "../../MCAL/TWI/twi.h"
+#include "util/delay.h"
 
 /*******************************************************************************
 *                      Functions Definitions                                   *
 *******************************************************************************/
 
-uint8 EEPROM_writeBytr(uint16 address,uint8 byte)
+uint8 EEPROM_writeByte(uint16 address,uint8 byte)
 {
+	_delay_ms(10);
 	TWI_start();
 	if(TWI_getStatus() != TWI_START)
 		return ERROR;
@@ -40,6 +42,7 @@ uint8 EEPROM_writeBytr(uint16 address,uint8 byte)
 
 uint8 EEPROM_readByte(uint16 address,uint8 *value)
 {
+	_delay_ms(10);
 	TWI_start();
 	if(TWI_getStatus() != TWI_START)
 		return ERROR;

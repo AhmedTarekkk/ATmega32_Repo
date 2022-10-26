@@ -55,7 +55,7 @@ void INT_EEPROM_readBlock(uint16 address, uint8* array , uint8 size)
 	uint8 counter = 0;
 	while(counter < size)
 	{
-		INT_EEPROM_readByte(address+counter, array+counter);
+		array[counter] = INT_EEPROM_readByte(address+counter);
 		counter++;
 	}
 }
