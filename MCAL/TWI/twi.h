@@ -27,18 +27,33 @@
 #define TWI_MR_DATA_NACK  0x58 /* Master received data but doesn't send ACK to slave. */
 
 /*******************************************************************************
+*                         Types Declaration                                   *
+*******************************************************************************/
+
+/*******************************************************************************
+* Name: TWI_ConfigType
+* Type: Structure
+* Description: Data type to dynamic configure the I2C
+********************************************************************************/
+
+typedef struct{
+ uint8 address;
+ uint16 bit_rate; /* in Kbps */
+}TWI_ConfigType;
+
+/*******************************************************************************
 *                      Functions Prototypes                                   *
 *******************************************************************************/
 
 /*******************************************************************************
 * Function Name:		TWI_init
 * Description:			Function to initialize the I2C.
-* Parameters (in):    	None
+* Parameters (in):    	Pointer to structure to dynamic configure the I2C module.
 * Parameters (out):   	None
 * Return value:      	void
 ********************************************************************************/
 
-void TWI_init();
+void TWI_init(const TWI_ConfigType * Config_Ptr);
 
 /*******************************************************************************
 * Function Name:		TWI_start

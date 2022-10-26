@@ -16,12 +16,13 @@
 *                      Functions Definitions                                   *
 *******************************************************************************/
 
-void TWI_init()
+void TWI_init(const TWI_ConfigType * Config_Ptr)
 {
 	TWCR = (1<<TWEN);
-	TWAR = 0x02;
-    TWBR = 0x02;
-	TWSR = 0x00;
+	TWAR = Config_Ptr->address;
+	TWSR = 0x00; /* assuming it is equal to 0 always and get TWBR based on that assumption */
+	TWBR = (uint8)(((F_CPU/((Config_Ptr->bit_rate)*1000))-16) /2);
+
 }
 
 void TWI_start()
