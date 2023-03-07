@@ -35,6 +35,10 @@ void ULTRASONIC_init(void)
 	GPIO_setupPinDirection(ULTRASONIC_TR_PORT_ID, ULTRASONIC_TR_PIN_ID, PIN_OUTPUT); /* TR is output pin */
 	GPIO_writePin(ULTRASONIC_TR_PORT_ID, ULTRASONIC_TR_PIN_ID, LOGIC_HIGH); /* TR = 0 in idle case */
 	GPIO_setupPinDirection(ULTRASONIC_EKKO_PORT_ID, ULTRASONIC_EKKO_PIN_ID, PIN_INPUT); /* EKKO is input pin */
+	GPIO_setupPinDirection(PORTD_ID	, PIN4_ID, PIN_OUTPUT);
+	GPIO_setupPinDirection(PORTD_ID	, PIN4_ID, PIN_OUTPUT);
+	GPIO_writePin(PORTD_ID, PIN4_ID, LOGIC_HIGH);
+	GPIO_writePin(PORTD_ID, PIN5_ID, LOGIC_LOW);
 
 	ICU_ConfigType Config = {F_CPU_8,RISING}; /* Structure that have configuration we want */
 

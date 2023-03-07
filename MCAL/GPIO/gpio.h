@@ -65,6 +65,8 @@ void GPIO_setupPinDirection(uint8 port_num, uint8 pin_num, GPIO_PinDirectionType
  */
 void GPIO_writePin(uint8 port_num, uint8 pin_num, uint8 value);
 
+void GPIO_togglePin(uint8 port_num, uint8 pin_num);
+
 /*
  * Description :
  * Read and return the value for the required pin, it should be Logic High or Logic Low.

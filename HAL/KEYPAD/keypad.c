@@ -15,167 +15,56 @@
 *                      Functions Prototypes(Private)                          *
 *******************************************************************************/
 
-#if (STANDARD_KEYPAD == FALSE)
-
-#if (KEYPAD_NUM_COLS == 3)
-
-static uint8 KEYPAD_4x3_adjustKeyNumber(uint8 button_number);
-
-#elif (KEYPAD_NUM_COLS == 4)
-
-static uint8 KEYPAD_4x4_adjustKeyNumber(uint8 button_number);
-
-#endif
-
-#endif /* ---> STANDARD_KEYPAD */
 /*******************************************************************************
 *                      Functions Definitions                                  *
 *******************************************************************************/
 void KEYPAD_init()
 {
-	GPIO_setupPinDirection(KEYPAD_ROW_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID, PIN_INPUT);
-	GPIO_setupPinDirection(KEYPAD_ROW_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID+1, PIN_INPUT);
-	GPIO_setupPinDirection(KEYPAD_ROW_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID+2, PIN_INPUT);
-	GPIO_setupPinDirection(KEYPAD_ROW_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID+3, PIN_INPUT);
-
-	GPIO_setupPinDirection(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID, PIN_INPUT);
-	GPIO_setupPinDirection(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID+1, PIN_INPUT);
-	GPIO_setupPinDirection(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID+2, PIN_INPUT);
-	GPIO_setupPinDirection(PORTC_ID, PIN0_ID, PIN_INPUT);
-#if(KEYPAD_NUM_COLS == 4)
-	GPIO_setupPinDirection(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID+3, PIN_INPUT);
-#endif
-	/* Pull Up Resistors */
+	GPIO_setupPinDirection(KEYPAD_ROWS_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID, LOGIC_HIGH);
+	GPIO_setupPinDirection(KEYPAD_ROWS_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID+1, LOGIC_HIGH);
+	GPIO_setupPinDirection(KEYPAD_ROWS_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID+2, LOGIC_HIGH);
+	GPIO_setupPinDirection(KEYPAD_ROWS_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID+3, LOGIC_HIGH);
+	GPIO_setupPinDirection(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID, LOGIC_LOW);
+	GPIO_setupPinDirection(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID+1, LOGIC_LOW);
+	GPIO_setupPinDirection(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID+2, LOGIC_LOW);
+	GPIO_setupPinDirection(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID+3, LOGIC_LOW);
 	GPIO_writePin(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID, LOGIC_HIGH);
 	GPIO_writePin(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID+1, LOGIC_HIGH);
 	GPIO_writePin(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID+2, LOGIC_HIGH);
-	GPIO_writePin(PORTC_ID, PIN0_ID, LOGIC_HIGH);
-#if(KEYPAD_NUM_COLS == 4)
 	GPIO_writePin(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID+3, LOGIC_HIGH);
-#endif
 }
 
 uint8 KEYPAD_getPressedKey()
 {
-	uint8 col,row;
-	while(1)
-	{
-		for(row = 0 ; row < KEYPAD_NUM_ROWS ; row++)
-		{
-			GPIO_setupPinDirection(KEYPAD_ROW_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID+row, PIN_OUTPUT);
-			GPIO_writePin(KEYPAD_ROW_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID+row, KEYPAD_BUTTON_PRESSED);
+//	 char arr[4][4]={{'D','C','B','A'},{'#','9','6','3'},{'0','8','5','2'},{'*','7','4','1'}}; /* Hardware */
+	 char arr[4][4]={{'1','2','3','A'},{'4','5','6','B'},{'7','8','9','C'},{'*','0','#','D'}}; /* Software */
+	 char row,coloumn,x;
+	 char returnval=NOTPRESSED;
+	 while(returnval == NOTPRESSED)
+	 {
+		 for(row=0;row<4;row++)
+		 {
+			 GPIO_writePin(KEYPAD_ROWS_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID, LOGIC_HIGH);
+			 GPIO_writePin(KEYPAD_ROWS_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID+1, LOGIC_HIGH);
+			 GPIO_writePin(KEYPAD_ROWS_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID+2, LOGIC_HIGH);
+			 GPIO_writePin(KEYPAD_ROWS_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID+3, LOGIC_HIGH);
+			 GPIO_writePin(KEYPAD_ROWS_PORT_ID, row+KEYPAD_FIRST_ROW_PIN_ID, LOGIC_LOW);
 
-			for(col = 0 ; col < KEYPAD_NUM_COLS ; col++)
+			for(coloumn=0;coloumn<4;coloumn++)
 			{
-				if(GPIO_readPin(KEYPAD_COL_PORT_ID, KEYPAD_FIRST_COL_PIN_ID+col) == KEYPAD_BUTTON_PRESSED)
-				{
-					#if (STANDARD_KEYPAD == FALSE)
-						#if (KEYPAD_NUM_COLS == 3)
-							GPIO_setupPinDirection(KEYPAD_ROW_PORT_ID,KEYPAD_FIRST_ROW_PIN_ID+row,PIN_INPUT);
-							return KEYPAD_4x3_adjustKeyNumber( (row*KEYPAD_NUM_COLS)+col+1 );
-						#elif (KEYPAD_NUM_COLS == 4)
-							GPIO_setupPinDirection(KEYPAD_ROW_PORT_ID,KEYPAD_FIRST_ROW_PIN_ID+row,PIN_INPUT);
-							return KEYPAD_4x4_adjustKeyNumber( (row*KEYPAD_NUM_COLS)+col+1 );
-						#endif
-					#elif (STANDARD_KEYPAD == TRUE)
-						GPIO_setupPinDirection(KEYPAD_ROW_PORT_ID,KEYPAD_FIRST_ROW_PIN_ID+row,PIN_INPUT);
-						return ((row*KEYPAD_NUM_COLS)+col+1);
-					#endif /* ---> STANDARD_KEYPAD */
-				}
+				x= GPIO_readPin(KEYPAD_COL_PORT_ID, coloumn+4);
+				if(x==0)
+				 {
+					 returnval=arr[row][coloumn];
+					 break;
+				 }
 			}
-
-			GPIO_setupPinDirection(KEYPAD_ROW_PORT_ID, KEYPAD_FIRST_ROW_PIN_ID+row, PIN_INPUT);
+			if(x==0)
+			{
+				break;
+			}
 		}
-	}
+		 if(returnval != NOTPRESSED)
+		 return returnval ;
+	 }
 }
-
-#if (STANDARD_KEYPAD == FALSE)
-
-#if (KEYPAD_NUM_COLS == 3)
-
-static uint8 KEYPAD_4x3_adjustKeyNumber(uint8 button_number)
-{
-	uint8 keypad_button = 0;
-	switch(button_number)
-	{
-	case 10:
-		keypad_button = '*';
-		break;
-	case 11:
-		keypad_button = 0;
-		break;
-	case 12:
-		keypad_button = '#';
-		break;
-	default:
-		keypad_button = button_number;
-		break;
-	}
-	return keypad_button;
-}
-
-#elif (KEYPAD_NUM_COLS == 4)
-
-static uint8 KEYPAD_4x4_adjustKeyNumber(uint8 button_number)
-{
-	uint8 keypad_button = 0;
-	switch (button_number)
-	{
-	case 1:
-		keypad_button = 7;
-		break;
-	case 2:
-		keypad_button = 8;
-		break;
-	case 3:
-		keypad_button = 9;
-		break;
-	case 4:
-		keypad_button = '%';
-		break;
-	case 5:
-		keypad_button = 4;
-		break;
-	case 6:
-		keypad_button = 5;
-		break;
-	case 7:
-		keypad_button = 6;
-		break;
-	case 8:
-		keypad_button = '*';
-		break;
-	case 9:
-		keypad_button = 1;
-		break;
-	case 10:
-		keypad_button = 2;
-		break;
-	case 11:
-		keypad_button = 3;
-		break;
-	case 12:
-		keypad_button = '-';
-		break;
-	case 13:
-		keypad_button = 13;
-		break;
-	case 14:
-		keypad_button = 0;
-		break;
-	case 15:
-		keypad_button = '=';
-		break;
-	case 16:
-		keypad_button = '+';
-		break;
-	default:
-		keypad_button = button_number;
-		break;
-	}
-	return keypad_button;
-}
-
-#endif
-
-#endif	/* STANDARD_KEYPAD */

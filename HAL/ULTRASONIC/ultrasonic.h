@@ -17,7 +17,7 @@
 *                        		Definitions                                    *
 *******************************************************************************/
 
-#define ULTRASONIC_TR_PORT_ID			PORTB_ID
+#define ULTRASONIC_TR_PORT_ID			PORTD_ID
 #define ULTRASONIC_TR_PIN_ID			PIN5_ID
 
 #define ULTRASONIC_EKKO_PORT_ID			PORTD_ID
