@@ -94,4 +94,24 @@ void TIMER1_COMP_setCallBack( void(*a_ptr)(void) );
 ********************************************************************************/
 void TIMER1_OVF_setCallBack( void(*a_ptr)(void) );
 
+/*******************************************************************************
+* Function Name:		Timer1_Delay_us
+* Description:			Function to generate delay using timer1 to be more accurate
+* Parameters (in):    	required delay period in us
+* Parameters (out):   	None
+* Return value:      	void
+********************************************************************************/
+
+void Timer1_Delay_us(uint16 time);
+
+/*******************************************************************************
+* Function Name:		Timer1_Delay_ms
+* Description:			Function to generate delay using timer1 to be more accurate
+* Parameters (in):    	required delay period in ms
+* Parameters (out):   	None
+* Return value:      	void
+********************************************************************************/
+
+void Timer1_Delay_ms(uint16 time);
+
 #endif /* MCAL_TIMER1_TIMER1_H_ */

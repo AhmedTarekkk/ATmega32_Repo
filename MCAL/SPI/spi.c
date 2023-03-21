@@ -18,7 +18,7 @@
 *******************************************************************************/
 
 /* to store the special char to end sting at and it has default value = # */
-static uint8 g_endStringChar = '#';
+static uint8 g_endStringChar = SPI_END_OF_STRING;
 
 /*******************************************************************************
 *                      Functions Definitions                                   *
